@@ -2,13 +2,13 @@ CREATE DATABASE review_data;
 USE review_data;
 CREATE TABLE property(
   property_name VARCHAR(40) NOT NULL,
-  combined_aggregate DECIMAL(2, 1),
-  cleanliness_aggregate DECIMAL(2, 1),
-  communication_aggregate DECIMAL(2, 1),
-  check_in_aggregate DECIMAL(2, 1),
-  accuracy_aggregate DECIMAL(2, 1),
-  location_aggregate DECIMAL(2, 1),
-  value_aggregate DECIMAL(2, 1),
+  combined_aggregate DECIMAL(2, 1) NOT NULL,
+  cleanliness_aggregate DECIMAL(2, 1) NOT NULL,
+  communication_aggregate DECIMAL(2, 1) NOT NULL,
+  check_in_aggregate DECIMAL(2, 1) NOT NULL,
+  accuracy_aggregate DECIMAL(2, 1) NOT NULL,
+  location_aggregate DECIMAL(2, 1) NOT NULL,
+  value_aggregate DECIMAL(2, 1) NOT NULL,
   number_of_reviews INTEGER NOT NULL,
   PRIMARY KEY(property_name)
 );
@@ -30,7 +30,7 @@ CREATE TABLE reviews(
 
 CREATE TABLE users(
   user_id INTEGER NOT NULL,
-  user_name VARCHAR(40),
+  user_name VARCHAR(40) NOT NULL,
   user_image_url TEXT NOT NULL,
   PRIMARY KEY(user_id)
 );
