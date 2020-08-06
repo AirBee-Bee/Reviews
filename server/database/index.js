@@ -5,6 +5,4 @@ var connection = mysql.createConnection({
   password: 'Alex',
   database: 'review_data'
 });
-
 connection.connect();
-
