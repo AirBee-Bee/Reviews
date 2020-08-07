@@ -14,7 +14,7 @@ CREATE TABLE property(
 );
 
 CREATE TABLE reviews(
-  review_id INTEGER NOT NULL,
+  review_id INTEGER NOT NULL IDENTITY(1, 1) SET DEFAULT 0,
   cleanliness INTEGER NOT NULL,
   communication INTEGER NOT NULL,
   check_in INTEGER NOT NULL,
