@@ -7,14 +7,13 @@ var connection = mysql.createConnection({
 });
 connection.connect();
 
-module.exports.accessor = function(queryString, queryArgs, callback) {
+module.exports.accessor = function(queryString, queryArgs) {
   return new Promise((resolve, reject) => {
     connection.query(queryString, queryArgs, (err, res) => {
       if (err) {
         console.log(err.message);
         reject(err);
       } else {
-        console.log(res);
         resolve(res);
       }
     });
