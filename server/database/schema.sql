@@ -14,7 +14,7 @@ CREATE TABLE property(
 );
 
 CREATE TABLE reviews(
-  review_id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  review_id INTEGER NOT NULL,
   cleanliness INTEGER NOT NULL,
   communication INTEGER NOT NULL,
   check_in INTEGER NOT NULL,
@@ -24,7 +24,8 @@ CREATE TABLE reviews(
   property_name VARCHAR(40) NOT NULL,
   user INTEGER NOT NULL,
   date DATE NOT NULL,
-  review_text VARCHAR(500) NOT NULL
+  review_text VARCHAR(500) NOT NULL,
+  PRIMARY KEY(review_id)
 );
 
 CREATE TABLE users(
