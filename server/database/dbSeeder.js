@@ -18,12 +18,12 @@ var randomScore = function(min, max) {
 
 module.exports.reviewSeeder = function() {
   var content = stringMaker(20);
-  var cleanliness = randomScore(0, 5);
-  var communication = randomScore(0, 5);
-  var check_in = randomScore(0, 5);
-  var accuracy = randomScore(0, 5);
-  var location = randomScore(0, 5);
-  var value = randomScore(0, 5);
+  var cleanliness = randomScore(0, 6);
+  var communication = randomScore(0, 6);
+  var check_in = randomScore(0, 6);
+  var accuracy = randomScore(0, 6);
+  var location = randomScore(0, 6);
+  var value = randomScore(0, 6);
   var property_name = stringMaker(1);
   var user = randomScore(0, 20);
   var date = `${randomScore(2015, 2020)}-${randomScore(10, 12)}-${randomScore(10, 28)}`;
@@ -80,7 +80,7 @@ module.exports.propertySeeder = function() {
       });
   };
 
-  db.accessor('SELECT property_name FROM reviews;', null)
+  db.accessor('SELECT property_name FROM reviews;')
     .then((properties) => {
       for (let currentProp = 0; currentProp < properties.length; currentProp++) {
         reviewAccumulator(properties[currentProp]);
@@ -90,3 +90,24 @@ module.exports.propertySeeder = function() {
       console.log(err);
     });
 };
+
+module.exports.userSeeder = function() {
+  db.accessor('SELECT user FROM reviews')
+    .then((allUsers) => {
+      for (let currentUser = 0; currentUser < allUsers.length; currentUser++) {
+        var name = stringMaker(1);
+        var picNumber = randomScore(1, 5);
+        var picUrl = `"https://airbeeandbeereviews.s3-us-west-1.amazonaws.com/review+user+images/userPic${picNumber}.jpg"`;
+        db.accessor(`REPLACE INTO users (user_id, user_name, user_image_url) VALUES ("${allUsers[currentUser].user}", "${name}", ${picUrl});`);
+      }
+    });
+};
+
+module.exports.masterSeed = function() {
+  for (let seed = 0; seed < 50; seed++) {
+    module.exports.reviewSeeder();
+  }
+  module.exports.propertySeeder();
+  module.exports.userSeeder();
+};
+module.exports.masterSeed();
