@@ -10,7 +10,7 @@
   "scripts": {
     "start": "nodemon ./server/server.js",
     "test": "jest",
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --watch",
     "maria": "mariadb <'./server/database/schema.sql';",
     "seed": "node ./server/database/dbSeeder.js"
   },

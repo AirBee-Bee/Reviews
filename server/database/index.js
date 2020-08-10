@@ -11,7 +11,6 @@ module.exports.accessor = function(queryString, queryArgs) {
   return new Promise((resolve, reject) => {
     connection.query(queryString, queryArgs, (err, res) => {
       if (err) {
-        console.log(err.message);
         reject(err);
       } else {
         resolve(res);
