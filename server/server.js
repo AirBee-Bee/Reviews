@@ -3,7 +3,7 @@ var db = require('./database/index.js');
 var App = express();
 var seeder = require('./database/dbSeeder.js');
 
-App.use(express.static(__dirname + '/..' + '/client'));
+App.use(express.static(__dirname + '/..' + '/public'));
 App.use(express.json());
 
 // get review scores for a specific property
