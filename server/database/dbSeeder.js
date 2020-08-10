@@ -29,8 +29,7 @@ module.exports.reviewSeeder = function() {
   var date = `${randomScore(2015, 2020)}-${randomScore(10, 12)}-${randomScore(10, 28)}`;
   var review_text = stringMaker(10);
   var values = [`${cleanliness}`, `${communication}`, `${check_in}`, `${accuracy}`, `${location}`, `${value}`, property_name, user, `${date}`, review_text];
-  var reviewString = 'INSERT INTO REVIEWS (cleanliness, communication, check_in, accuracy, location, value, property_name, user, date, review_text) VALUES (?);';
-  db.accessor(reviewString, [values]);
+  db.reviewSeedQuery(values);
 };
 
 module.exports.propertySeeder = function() {
@@ -45,7 +44,7 @@ module.exports.propertySeeder = function() {
     var valArray = [];
     var numberOfReviews = 0;
 
-    db.accessor(`select * FROM reviews where property_name = "${property.property_name}";`)
+    db.propertySeedQuery(property.property_name)
       .then((singleProperty) => {
         propertyName = singleProperty[0].property_name;
         for (let review = 0; review < singleProperty.length; review++) {
@@ -76,11 +75,11 @@ module.exports.propertySeeder = function() {
         var combinedArr = [cleanScore, commScore, checkScore, accScore, locScore, valScore];
         combinedScore = mean(combinedArr);
         var propertyComposite = [propertyName, `${combinedScore}`, `${cleanScore}`, `${commScore}`, `${checkScore}`, `${accScore}`, `${locScore}`, `${valScore}`, `${numberOfReviews}`];
-        db.accessor('REPLACE INTO property (property_name, combined_aggregate, cleanliness_aggregate, communication_aggregate, check_in_aggregate, accuracy_aggregate, location_aggregate, value_aggregate, number_of_reviews) VALUES (?);', [propertyComposite]);
+        db.scoreUpdateQuery(propertyComposite);
       });
   };
 
-  db.accessor('SELECT property_name FROM reviews;')
+  db.allPropertiesQuery()
     .then((properties) => {
       for (let currentProp = 0; currentProp < properties.length; currentProp++) {
         reviewAccumulator(properties[currentProp]);
@@ -92,13 +91,13 @@ module.exports.propertySeeder = function() {
 };
 
 module.exports.userSeeder = function() {
-  db.accessor('SELECT user FROM reviews')
+  db.allUsersQuery()
     .then((allUsers) => {
       for (let currentUser = 0; currentUser < allUsers.length; currentUser++) {
         var name = stringMaker(1);
         var picNumber = randomScore(1, 5);
         var picUrl = `"https://airbeeandbeereviews.s3-us-west-1.amazonaws.com/review+user+images/userPic${picNumber}.jpg"`;
-        db.accessor(`REPLACE INTO users (user_id, user_name, user_image_url) VALUES ("${allUsers[currentUser].user}", "${name}", ${picUrl});`);
+        db.updateUsersQuery(allUsers[currentUser].user, name, picUrl);
       }
     });
 };
