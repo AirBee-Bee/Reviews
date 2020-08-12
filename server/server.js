@@ -7,15 +7,16 @@ App.use(express.static(__dirname + '/..' + '/public'));
 App.use(express.json());
 
 // get review scores for a specific property
-App.get('/propertyScores', (req, res) => {
-  var requestedProperty = req.body.propertyName;
+App.get('/propertyScores/:propertyName', (req, res) => {
+  var requestedProperty = req.params.propertyName;
   db.propertyScoreQuery(requestedProperty)
-    .then((err, data) => {
-      if (err) {
-        res.status(400).send(err);
-      } else {
+    .then((data) => {
+      // if (err) {
+      //   console.log('err', data);
+      //   res.status(400).send(err);
+      // } else {
         res.send(200, data);
-      }
+      //}
     });
 });
 
