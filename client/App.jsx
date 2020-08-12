@@ -7,8 +7,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviewHeader: [],
-      reviewEntries: []
+      currentListing: {
+        propertyName: '',
+        combinedScore: 0,
+        cleanlinessScore: 0,
+        communicationScore: 0,
+        checkInScore: 0,
+        accuracyScore: 0,
+        locationScore: 0,
+        valueScore: 0,
+        numberOfReviews: 0
+      },
+      allReviews: [],
+      currentReviews: [],
+      modalReviews: []
     };
   }
   render() {
