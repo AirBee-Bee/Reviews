@@ -78,7 +78,6 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.fetchingReviews, this.state.fetchingScores);
     if (this.state.fetchingReviews === false && this.state.fetchingScores === false) {
       return (
         <div>
