@@ -25,23 +25,23 @@ App.get('/propertyReviews/:propertyName', (req, res) => {
 });
 
 // get all users for a specific property
-App.get('/userInfo', (req, res) => {
+App.get('/userInfo/:userIds', (req, res) => {
   var usersArray = [];
-  for (let user in req.body.userIds) {
-    usersArray.push(Number(req.body.userIds[user].userId));
+  var reqData = req.params.userIds.split(',');
+  console.log('reqData: ', reqData);
+  for (let user = 0; user < reqData.length; user++) {
+    console.log('each entry: ', reqData[user]);
+    usersArray.push(Number(reqData[user]));
   }
+  console.log('usersArray', usersArray);
   Promise.all(usersArray.map((idNumber) => {
     return db.userInfoQuery(idNumber)
       .catch((err) => {
         return err;
       });
   }))
-    .then((err, data) => {
-      if (err) {
-        res.status(400).send(err);
-      } else {
-        res.send(200, data);
-      }
+    .then((data) => {
+      res.send(200, data);
     })
     .catch((err) => {
       console.log(err);
