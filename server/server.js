@@ -11,25 +11,16 @@ App.get('/propertyScores/:propertyName', (req, res) => {
   var requestedProperty = req.params.propertyName;
   db.propertyScoreQuery(requestedProperty)
     .then((data) => {
-      // if (err) {
-      //   console.log('err', data);
-      //   res.status(400).send(err);
-      // } else {
-        res.send(200, data);
-      //}
+      res.send(200, data);
     });
 });
 
 // get all reviews for a specific property
-App.get('/propertyReviews', (req, res) => {
-  var requestedProperty = req.body.propertyName;
+App.get('/propertyReviews/:propertyName', (req, res) => {
+  var requestedProperty = req.params.propertyName;
   db.propertyReviewsQuery(requestedProperty)
-    .then((err, data) => {
-      if (err) {
-        res.status(400).send(err);
-      } else {
-        res.send(200, data);
-      }
+    .then((data) => {
+      res.send(200, data);
     });
 });
 

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SpecificScoreNumber = (props) => {
-  console.log('SpecificScoreNumber', props);
   return (
     <div
       className={props.className}
@@ -24,7 +23,6 @@ const SpecificScoreNumber = (props) => {
 };
 
 const SpecificScoreBar = (props) => {
-  console.log('SpecificScoreBar', props);
   return (
     <div
       className={props.className}
@@ -42,7 +40,6 @@ const SpecificScoreBar = (props) => {
 };
 
 const SpecificScoreMetrics = (props) => {
-  console.log('SpecificScoreMetric', props);
   return (
     <div
       className={props.className}
@@ -67,7 +64,6 @@ const SpecificScoreMetrics = (props) => {
 };
 
 const SpecificScoreName = (props) => {
-  console.log('SpecificScoreName', props);
   return (
     <div
       className={props.className}
@@ -94,7 +90,6 @@ const SpecificScoreName = (props) => {
 };
 
 const SpecificScoreContainer = (props) => {
-  console.log('SpecificScoreContainer', props);
   return (
     <div
       className={props.className}
@@ -120,8 +115,6 @@ const SpecificScoreContainer = (props) => {
 };
 
 const CategoryScoresContainer = (props) => {
-  console.log('CategoryScoresContainer', props);
-
   return (
     <div
       className={props.className}

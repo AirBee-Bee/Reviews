@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CombinedScoreContainer = (props) => {
-  console.log('CombinedScoreContainer', props);
   return (
     <div
       className={props.className}
@@ -43,8 +42,6 @@ const StarContainer = (props) => {
 };
 
 const ScoreHeadingContainer = (props) => {
-  console.log('ScoreHeadingContainer', props);
-
   return (
     <div
       className={props.className}

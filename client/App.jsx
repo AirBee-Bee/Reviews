@@ -21,17 +21,37 @@ class App extends React.Component {
       },
       allReviews: [],
       currentReviews: [],
-      modalReviews: []
+      modalReviews: [],
+      fetchingReviews: true,
+      fetchingScores: true
     };
-    this.getCurrentListing = this.getCurrentListing.bind(this);
+    this.getCurrentListingReviews = this.getCurrentListingReviews.bind(this);
+    this.getCurrentListingScores = this.getCurrentListingScores.bind(this);
   }
 
-  getCurrentListing(propertyName) {
+  getCurrentListingReviews(propertyName) {
+    var thisUrl = `propertyReviews/${propertyName}`;
+    $.ajax({
+      url: thisUrl,
+      type: 'GET',
+      data: JSON.stringify({'propertyName': propertyName}),
+      contentType: 'application/json',
+      success: (listingData) => {
+        var firstSix = [];
+        for (let review = 0; review < 6; review++) {
+          firstSix.push(listingData[review]);
+        }
+        this.setState({allReviews: listingData, currentReviews: firstSix, modalReviews: firstSix, fetchingReviews: false});
+      }
+    });
+  }
+
+  getCurrentListingScores(propertyName) {
     var thisUrl = `propertyScores/${propertyName}`;
     $.ajax({
       url: thisUrl,
       type: 'GET',
-      data: JSON.stringify({'propertyName': 'amenities'}),
+      data: JSON.stringify({'propertyName': propertyName}),
       contentType: 'application/json',
       success: (listingData) => {
         this.setState({currentListing: {
@@ -44,21 +64,32 @@ class App extends React.Component {
           locationScore: listingData[0].location_aggregate,
           valueScore: listingData[0].value_aggregate,
           numberOfReviews: listingData[0].number_of_reviews
-        }});
+        },
+        fetchingScores: false
+        });
       }
     });
   }
 
   componentDidMount() {
-    this.getCurrentListing('amenities');
+    this.getCurrentListingScores('amenities');
+    this.getCurrentListingReviews('amenities');
+
   }
 
   render() {
-    return (
-      <div>
-        <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing}></PageContainer>
-      </div>
-    );
+    console.log(this.state.fetchingReviews, this.state.fetchingScores);
+    if (this.state.fetchingReviews === false && this.state.fetchingScores === false) {
+      return (
+        <div>
+          <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing} allReviews={this.state.allReviews} currentReviews={this.state.currentReviews} modalReviews={this.state.modalReviews}></PageContainer>
+        </div>
+      );
+    } else {
+      return (
+        <div>Loading...</div>
+      );
+    }
   }
 }
 ReactDOM.render(<App />, document.getElementById('app'));
