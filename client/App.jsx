@@ -25,6 +25,7 @@ class App extends React.Component {
 
       allIds: [],
       allUsers: [],
+      usersObj: {someKey: 'someValue'},
 
       fetchingReviews: true,
       fetchingScores: true,
@@ -94,7 +95,18 @@ class App extends React.Component {
         for (let eachUser = 0; eachUser < users.length; eachUser++) {
           userInfo.push(users[eachUser][0]);
         }
-        this.setState({allUsers: userInfo, fetchingUsers: false});
+        this.setState({allUsers: userInfo}, () => {
+          var usersList = {};
+          console.log('this.state.allUsers: ', this.state.allUsers);
+          for (let user = 0; user < this.state.allUsers.length; user++) {
+            var key = this.state.allUsers[user].user_id;
+            console.log('key: ', key);
+            usersList[key] = this.state.allUsers[user];
+            console.log('usersList[key]: ', usersList[key]);
+          }
+          this.setState({usersObj: {usersList}, fetchingUsers: false});
+          console.log('usersObj: ', this.state.usersObj);
+        });
       }
     });
   }
@@ -106,10 +118,10 @@ class App extends React.Component {
 
   render() {
     if (this.state.fetchingReviews === false && this.state.fetchingScores === false && this.state.fetchingUsers === false) {
-      console.log('all users at render', this.state.allUsers);
+      console.log('all users at render', this.state.usersObj.usersList);
       return (
         <div>
-          <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing} allReviews={this.state.allReviews} currentReviews={this.state.currentReviews} modalReviews={this.state.modalReviews}></PageContainer>
+          <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing} allReviews={this.state.allReviews} currentReviews={this.state.currentReviews} modalReviews={this.state.modalReviews} users={this.state.usersObj.usersList}></PageContainer>
         </div>
       );
     } else {

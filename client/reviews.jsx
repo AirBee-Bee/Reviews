@@ -2,15 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SpecificReviewDate = (props) => {
+  var monthObj = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December'
+  };
+  var month = Number(props.specificDate.slice(5, 7));
+  var year = Number(props.specificDate.slice(0, 4));
+  var dateString = `${monthObj[month]} ${year}`;
   return (
     <div
       className={props.className}
       style={{
         display: 'flex',
         justifyContent: props.justifyContent || 'flex-start',
-        width: '75px',
+        width: '150px',
         height: '20px',
-        maxWidth: '75px',
+        maxWidth: '150px',
         minWidth: '75px',
         maxHeight: '20px',
         fontSize: '14px',
@@ -18,7 +35,7 @@ const SpecificReviewDate = (props) => {
         lineHeight: '20px'
       }}
     >
-      {props.specificDate}
+      {dateString}
       {props.children}
     </div>
   );
@@ -41,7 +58,7 @@ const SpecificReviewName = (props) => {
         lineHeight: '20px'
       }}
     >
-      Firstname
+      {props.specificUserName}
       {props.children}
     </div>
   );
@@ -59,16 +76,15 @@ const SpecificReviewUserDateContainer = (props) => {
         flex: props.flex || '0 1 auto',
         alignItems: 'left',
         margin: '0 0 16px 0',
-        width: '75px',
+        width: '150px',
         height: '44px',
-        maxWidth: '75px',
+        maxWidth: '150px',
         minWidth: '75px',
         maxHeight: '46px'
       }}
     >
-      {/* specificId={props.specificReview.user} */}
-      <SpecificReviewName ></SpecificReviewName>
-      <SpecificReviewDate specificDate={props.  specificReview.date}></SpecificReviewDate>
+      <SpecificReviewName specificUserName={props.specificUser.user_name}></SpecificReviewName>
+      <SpecificReviewDate specificDate={props.specificReview.date}></SpecificReviewDate>
       {props.children}
     </div>
   );
@@ -89,6 +105,7 @@ const SpecificReviewPicture = (props) => {
         maxHeight: '56px'
       }}
     >
+      <image src={props.specificUser.user_image_url} alt={`user image of ${props.specificUser.user_name}`}/>
       {props.children}
     </div>
   );
@@ -111,11 +128,11 @@ const SpecificReviewContainer = (props) => {
         height: '135px',
         maxWidth: '457px',
         minWidth: '450px',
-        maxHeight: '136px'
+        maxHeight: '136px',
       }}
     >
-      <SpecificReviewPicture></SpecificReviewPicture>
-      <SpecificReviewUserDateContainer specificReview={props.specificReview}></SpecificReviewUserDateContainer>
+      <SpecificReviewPicture specificUser={props.specificUser}></SpecificReviewPicture>
+      <SpecificReviewUserDateContainer specificReview={props.specificReview} specificUser={props.specificUser}></SpecificReviewUserDateContainer>
       {props.specificReview.review_text}
       {props.children}
     </div>
@@ -137,12 +154,12 @@ const ReviewsContainer = (props) => {
         minWidth: '479px'
       }}
     >
-      <SpecificReviewContainer specificReview={props.currentReviews[0]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[1]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[2]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[3]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[4]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[5]}></SpecificReviewContainer>
+      <SpecificReviewContainer specificReview={props.currentReviews[0]} specificUser={props.users[props.currentReviews[0].user]}></SpecificReviewContainer>
+      <SpecificReviewContainer specificReview={props.currentReviews[1]} specificUser={props.users[props.currentReviews[1].user]}></SpecificReviewContainer>
+      <SpecificReviewContainer specificReview={props.currentReviews[2]} specificUser={props.users[props.currentReviews[2].user]}></SpecificReviewContainer>
+      <SpecificReviewContainer specificReview={props.currentReviews[3]} specificUser={props.users[props.currentReviews[3].user]}></SpecificReviewContainer>
+      <SpecificReviewContainer specificReview={props.currentReviews[4]} specificUser={props.users[props.currentReviews[4].user]}></SpecificReviewContainer>
+      <SpecificReviewContainer specificReview={props.currentReviews[5]} specificUser={props.users[props.currentReviews[5].user]}></SpecificReviewContainer>
       {props.children}
     </div>
   );

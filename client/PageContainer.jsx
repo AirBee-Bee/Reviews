@@ -24,21 +24,20 @@ const InnerContainer = (props) => {
     >
       <ScoreHeading height={'59px'} currentListing={props.currentListing}></ScoreHeading>
       <CategoryScores currentListing={props.currentListing}></CategoryScores>
-      <Reviews currentReviews={props.currentReviews}></Reviews>
+      <Reviews currentReviews={props.currentReviews} users={props.users}></Reviews>
       {props.children}
     </div>
   );
 };
 
 const PageContainer = (props) => {
-  console.log(props);
   return (
     <div
       className={props.className}
       style={{
       }}
     >
-      <InnerContainer padding={'48px 24px 0'} height={'1160px'} currentListing={props.currentListing} currentReviews={props.currentReviews}></InnerContainer>
+      <InnerContainer padding={'48px 24px 0'} height={'1160px'} currentListing={props.currentListing} currentReviews={props.currentReviews} users={props.users}></InnerContainer>
       {props.children}
     </div>
   );
