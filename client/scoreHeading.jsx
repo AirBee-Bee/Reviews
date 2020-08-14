@@ -12,7 +12,7 @@ const CombinedScoreContainer = (props) => {
         flexWrap: 'nowrap',
         height: '27px',
         fontSize: '22px',
-        fontWeight: '400',
+        fontWeight: '600px',
         lineHeight: '20px'
       }}
     >

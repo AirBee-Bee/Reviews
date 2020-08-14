@@ -31,8 +31,8 @@ const SpecificReviewDate = (props) => {
         minWidth: '75px',
         maxHeight: '20px',
         fontSize: '14px',
-        fontWeight: '400',
-        lineHeight: '20px'
+        lineHeight: '20px',
+        color: 'rgb(113, 113, 113)'
       }}
     >
       {dateString}
@@ -53,7 +53,6 @@ const SpecificReviewName = (props) => {
         maxWidth: '75px',
         minWidth: '75px',
         maxHeight: '20px',
-        fontSize: '20px',
         fontWeight: '600',
         lineHeight: '20px'
       }}
@@ -75,7 +74,7 @@ const SpecificReviewUserDateContainer = (props) => {
         flexWrap: 'wrap',
         flex: props.flex || '0 1 auto',
         alignItems: 'left',
-        margin: '0 0 16px 0',
+        margin: '0 0 0 12px',
         width: '150px',
         height: '44px',
         maxWidth: '150px',
@@ -95,17 +94,30 @@ const SpecificReviewPicture = (props) => {
     <div
       className={props.className}
       style={{
-        justifyContent: props.justifyContent || 'flex-start',
-        alignItems: 'left',
+        //justifyContent: props.justifyContent || 'flex-start',
+        //alignItems: 'left',
         margin: '0 12px 16px 0',
         width: '56px',
         height: '56px',
         maxWidth: '56px',
         minWidth: '56px',
-        maxHeight: '56px'
+        maxHeight: '56px',
+        borderRadius: '50%',
+        display: 'flex',
+        justifyContent: props.justifyContent || 'flex-start',
+        flexDirection: props.flexDirection || 'row',
+        flexGrow: props.flexGrow || 0,
+        flexBasis: props.flexBasis || 'auto',
+        flexShrink: props.flexShrink || 1,
+        flexWrap: props.flexWrap || 'wrap',
+        flex: props.flex || '0 1 auto',
+        alignItems: props.alignItems || 'stretch',
+        margin: props.margin || '0',
+        padding: props.padding || '0',
+        overflow: 'hidden'
       }}
     >
-      <image src={props.specificUser.user_image_url} alt={`user image of ${props.specificUser.user_name}`}/>
+      <img src={props.specificUser.user_image_url} alt={`user image of ${props.specificUser.user_name}`}/>
       {props.children}
     </div>
   );
@@ -121,7 +133,7 @@ const SpecificReviewContainer = (props) => {
         flexDirection: props.flexDirection || 'row',
         flexWrap: 'wrap',
         flex: '1 0 0%',
-        alignItems: 'left',
+        alignItems: 'center',
         margin: '0 94px 0 0',
         padding: '0 8px 0',
         width: '457px',
@@ -129,6 +141,7 @@ const SpecificReviewContainer = (props) => {
         maxWidth: '457px',
         minWidth: '450px',
         maxHeight: '136px',
+        fontWeight: '400'
       }}
     >
       <SpecificReviewPicture specificUser={props.specificUser}></SpecificReviewPicture>

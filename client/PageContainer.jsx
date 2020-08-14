@@ -19,7 +19,10 @@ const InnerContainer = (props) => {
         flex: props.flex || '0 1 auto',
         alignItems: props.alignItems || 'stretch',
         padding: props.padding || '0',
-        height: props.height || 'auto'
+        height: props.height || 'auto',
+        fontFamily: 'Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif',
+        fontSize: '16px',
+        fontWeight: '400'
       }}
     >
       <ScoreHeading height={'59px'} currentListing={props.currentListing}></ScoreHeading>

@@ -28,12 +28,9 @@ App.get('/propertyReviews/:propertyName', (req, res) => {
 App.get('/userInfo/:userIds', (req, res) => {
   var usersArray = [];
   var reqData = req.params.userIds.split(',');
-  console.log('reqData: ', reqData);
   for (let user = 0; user < reqData.length; user++) {
-    console.log('each entry: ', reqData[user]);
     usersArray.push(Number(reqData[user]));
   }
-  console.log('usersArray', usersArray);
   Promise.all(usersArray.map((idNumber) => {
     return db.userInfoQuery(idNumber)
       .catch((err) => {
