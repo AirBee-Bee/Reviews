@@ -22,11 +22,18 @@ class App extends React.Component {
       allReviews: [],
       currentReviews: [],
       modalReviews: [],
+
+      allIds: [],
+      allUsers: [],
+      usersObj: {someKey: 'someValue'},
+
       fetchingReviews: true,
-      fetchingScores: true
+      fetchingScores: true,
+      fetchingUsers: true
     };
     this.getCurrentListingReviews = this.getCurrentListingReviews.bind(this);
     this.getCurrentListingScores = this.getCurrentListingScores.bind(this);
+    this.getCurrentListingUsers = this.getCurrentListingUsers.bind(this);
   }
 
   getCurrentListingReviews(propertyName) {
@@ -37,11 +44,16 @@ class App extends React.Component {
       data: JSON.stringify({'propertyName': propertyName}),
       contentType: 'application/json',
       success: (listingData) => {
+        var idSet = new Set();
+        for (let review = 0; review < listingData.length; review++) {
+          idSet.add(listingData[review].user);
+        }
+        var ids = Array.from(idSet);
         var firstSix = [];
         for (let review = 0; review < 6; review++) {
           firstSix.push(listingData[review]);
         }
-        this.setState({allReviews: listingData, currentReviews: firstSix, modalReviews: firstSix, fetchingReviews: false});
+        this.setState({allReviews: listingData, currentReviews: firstSix, modalReviews: firstSix, allIds: ids, fetchingReviews: false}, () => this.getCurrentListingUsers());
       }
     });
   }
@@ -71,17 +83,45 @@ class App extends React.Component {
     });
   }
 
+  getCurrentListingUsers() {
+    var thisUrl = `userInfo/${this.state.allIds}`;
+    $.ajax({
+      url: thisUrl,
+      type: 'GET',
+      data: JSON.stringify({'userIds': this.state.allIds}),
+      contentType: 'application/json',
+      success: (users) => {
+        var userInfo = [];
+        for (let eachUser = 0; eachUser < users.length; eachUser++) {
+          userInfo.push(users[eachUser][0]);
+        }
+        this.setState({allUsers: userInfo}, () => {
+          var usersList = {};
+          console.log('this.state.allUsers: ', this.state.allUsers);
+          for (let user = 0; user < this.state.allUsers.length; user++) {
+            var key = this.state.allUsers[user].user_id;
+            console.log('key: ', key);
+            usersList[key] = this.state.allUsers[user];
+            console.log('usersList[key]: ', usersList[key]);
+          }
+          this.setState({usersObj: {usersList}, fetchingUsers: false});
+          console.log('usersObj: ', this.state.usersObj);
+        });
+      }
+    });
+  }
+
   componentDidMount() {
     this.getCurrentListingScores('amenities');
     this.getCurrentListingReviews('amenities');
-
   }
 
   render() {
-    if (this.state.fetchingReviews === false && this.state.fetchingScores === false) {
+    if (this.state.fetchingReviews === false && this.state.fetchingScores === false && this.state.fetchingUsers === false) {
+      console.log('all users at render', this.state.usersObj.usersList);
       return (
         <div>
-          <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing} allReviews={this.state.allReviews} currentReviews={this.state.currentReviews} modalReviews={this.state.modalReviews}></PageContainer>
+          <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing} allReviews={this.state.allReviews} currentReviews={this.state.currentReviews} modalReviews={this.state.modalReviews} users={this.state.usersObj.usersList}></PageContainer>
         </div>
       );
     } else {
@@ -93,3 +133,5 @@ class App extends React.Component {
 }
 
 export default App;
+
+ReactDOM.render(<App />, document.getElementById('app'));

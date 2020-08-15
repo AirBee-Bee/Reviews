@@ -11,9 +11,9 @@ const SpecificScoreNumber = (props) => {
         width: '17px',
         height: '16px',
         maxHeight: '16px',
-        fontSize: '20px',
-        fontWeight: '400',
-        lineHeight: '20px'
+        fontSize: '12px',
+        lineHeight: '20px',
+        fontWeight: '600'
       }}
     >
       {props.score}
@@ -78,8 +78,6 @@ const SpecificScoreName = (props) => {
         width: '204px',
         height: '20px',
         maxHeight: '20px',
-        fontSize: '20px',
-        fontWeight: '400',
         lineHeight: '20px'
       }}
     >
