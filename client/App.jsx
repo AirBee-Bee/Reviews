@@ -2,7 +2,40 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PageContainer from './pageContainer.jsx';
 import styled from 'styled-components';
+import ReactModal from 'react-modal';
+import ScoreHeading from './scoreHeading.jsx';
+import CategoryScores from './categoryScores.jsx';
+import Reviews from './reviews.jsx';
 import $ from 'jquery';
+
+const customStyles = {
+  overlay: {
+    top: '0px',
+    left: '0px',
+    right: '0px',
+    bottom: '0px',
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgb(72, 72, 72, .5)',
+  },
+  content: {
+    top: '40px',
+    left: '40px',
+    right: '40px',
+    bottom: '40px',
+    height: 'auto',
+    width: 'auto',
+    padding: '24px 24px 24px 24px',
+    transform: '(-50%, -50%)',
+    backgroundColor: 'white',
+    outlineColor: 'rgb(72, 72, 72)',
+    borderRadius: '12px',
+    maxWidth: '1032px',
+    flexFlow: 'row wrap'
+  }
+};
+
+ReactModal.setAppElement('#app');
 
 class App extends React.Component {
   constructor(props) {
@@ -29,11 +62,46 @@ class App extends React.Component {
 
       fetchingReviews: true,
       fetchingScores: true,
-      fetchingUsers: true
+      fetchingUsers: true,
+      show: false,
     };
     this.getCurrentListingReviews = this.getCurrentListingReviews.bind(this);
     this.getCurrentListingScores = this.getCurrentListingScores.bind(this);
     this.getCurrentListingUsers = this.getCurrentListingUsers.bind(this);
+    this.showModal = this.showModal.bind(this);
+    this.hideModal = this.hideModal.bind(this);
+  }
+
+  closeModalButton() {
+    return (
+      <button
+        onClick={this.hideModal}
+        style={{
+          display: 'block',
+          fill: 'none',
+          height: '16px',
+          width: '16px',
+          stroke: 'currentcolor',
+          strokeWidth: '3',
+          overflow: 'visible',
+          border: 'none',
+          backgroundColor: 'white',
+          fontSize: '14px',
+          fontStretch: '100%',
+          paddingBottom: '37px'
+        }}>
+        X
+      </button>
+    );
+  }
+
+  showModal(e) {
+    console.log('clicked');
+    this.setState({show: true});
+  }
+
+  hideModal(e) {
+    this.setState({show: false});
   }
 
   getCurrentListingReviews(propertyName) {
@@ -97,15 +165,11 @@ class App extends React.Component {
         }
         this.setState({allUsers: userInfo}, () => {
           var usersList = {};
-          console.log('this.state.allUsers: ', this.state.allUsers);
           for (let user = 0; user < this.state.allUsers.length; user++) {
             var key = this.state.allUsers[user].user_id;
-            console.log('key: ', key);
             usersList[key] = this.state.allUsers[user];
-            console.log('usersList[key]: ', usersList[key]);
           }
           this.setState({usersObj: {usersList}, fetchingUsers: false});
-          console.log('usersObj: ', this.state.usersObj);
         });
       }
     });
@@ -118,10 +182,22 @@ class App extends React.Component {
 
   render() {
     if (this.state.fetchingReviews === false && this.state.fetchingScores === false && this.state.fetchingUsers === false) {
-      console.log('all users at render', this.state.usersObj.usersList);
       return (
         <div>
-          <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing} allReviews={this.state.allReviews} currentReviews={this.state.currentReviews} modalReviews={this.state.modalReviews} users={this.state.usersObj.usersList}></PageContainer>
+          <PageContainer sectionContainer height={'1160px'} currentListing={this.state.currentListing} allReviews={this.state.allReviews} currentReviews={this.state.currentReviews} modalReviews={this.state.modalReviews} users={this.state.usersObj.usersList} onClick={(e) => {
+            this.showModal();
+          }}>
+          </PageContainer>
+          <ReactModal isOpen={this.state.show} onRequestClose={this.hideModal} style={customStyles}>
+            {this.closeModalButton()}
+            <div>
+              <ScoreHeading height={'59px'} currentListing={this.state.currentListing} fontSize={'32px'} lineHeight={'36px'} fontWeight={'800px'}/>
+              <CategoryScores currentListing={this.state.currentListing} modalJustifyContent='center' modalMargin='0 0 0 0'/>
+            </div>
+            <div>
+              <Reviews allReviews={this.state.allReviews} currentReviews={this.state.allReviews} users={this.state.usersObj.usersList} maxWidth={'479px'} justifyContent={'left'} />
+            </div>
+          </ReactModal>
         </div>
       );
     } else {

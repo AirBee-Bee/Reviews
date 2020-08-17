@@ -134,7 +134,7 @@ const SpecificReviewContainer = (props) => {
         flexWrap: 'wrap',
         flex: '1 0 0%',
         alignItems: 'center',
-        margin: '0 94px 0 0',
+        margin: '0',
         padding: '0 8px 0',
         width: '457px',
         height: '135px',
@@ -158,21 +158,33 @@ const ReviewsContainer = (props) => {
       className={props.className}
       style={{
         display: 'flex',
-        justifyContent: 'space-evenly',
-        flexDirection: props.flexDirection || 'row',
-        flexWrap: 'wrap',
-        flex: '1 0 0%',
+        justifyContent: /*props.justifyContent || */'flex-start',
+        //flexDirection: props.flexDirection || 'column',
+        flexFlow: 'row wrap',
+        flex: '0 1 0%',
         alignItems: 'left',
-        height: '504px',
-        minWidth: '479px'
+        //height: '504px',
+        maxWidth: /*props.maxWidth || */'1400px',
+        //minWidth: '479px'
       }}
     >
-      <SpecificReviewContainer specificReview={props.currentReviews[0]} specificUser={props.users[props.currentReviews[0].user]}></SpecificReviewContainer>
+
+
+      {props.currentReviews.map((review, index) => {
+        return <div>
+          <SpecificReviewContainer specificReview={props.currentReviews[index]} specificUser={props.users[props.currentReviews[index].user]} margin='0'></SpecificReviewContainer>
+        </div>;
+      })}
+
+
+
+
+      {/* <SpecificReviewContainer specificReview={props.currentReviews[0]} specificUser={props.users[props.currentReviews[0].user]}></SpecificReviewContainer>
       <SpecificReviewContainer specificReview={props.currentReviews[1]} specificUser={props.users[props.currentReviews[1].user]}></SpecificReviewContainer>
       <SpecificReviewContainer specificReview={props.currentReviews[2]} specificUser={props.users[props.currentReviews[2].user]}></SpecificReviewContainer>
       <SpecificReviewContainer specificReview={props.currentReviews[3]} specificUser={props.users[props.currentReviews[3].user]}></SpecificReviewContainer>
       <SpecificReviewContainer specificReview={props.currentReviews[4]} specificUser={props.users[props.currentReviews[4].user]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[5]} specificUser={props.users[props.currentReviews[5].user]}></SpecificReviewContainer>
+      <SpecificReviewContainer specificReview={props.currentReviews[5]} specificUser={props.users[props.currentReviews[5].user]}></SpecificReviewContainer> */}
       {props.children}
     </div>
   );
