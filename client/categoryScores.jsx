@@ -23,15 +23,21 @@ const SpecificScoreNumber = (props) => {
 };
 
 const SpecificScoreBar = (props) => {
+  var barWidth = Math.floor(120 * (props.score * .2));
+  var barString = `${barWidth}px`;
+  var barPad = `${120 - barWidth}px`;
   return (
     <div
       className={props.className}
       style={{
         margin: '0 4px 0 0',
-        padding: '0 5px 0 0',
-        width: '121px',
+        marginRight: barPad,
+        width: barWidth,
         height: '4px',
-        maxHeight: '4px'
+        maxHeight: '4px',
+        maxWidth: '120px',
+        backgroundColor: 'black',
+        borderRadius: '4px'
       }}
     >
       {props.children}
@@ -49,7 +55,7 @@ const SpecificScoreMetrics = (props) => {
         flexDirection: props.flexDirection || 'row',
         flexWrap: 'nowrap',
         flex: props.flex || '0 1 auto',
-        alignItems: 'left',
+        alignItems: 'center',
         margin: '0 0 16px 0',
         width: '153px',
         height: '20px',
@@ -93,12 +99,12 @@ const SpecificScoreContainer = (props) => {
       className={props.className}
       style={{
         display: 'flex',
-        justifyContent: props.justifyContent || 'flex-start',
+        justifyContent: 'flex-start',
         flexDirection: props.flexDirection || 'row',
         flexWrap: 'nowrap',
         flex: props.flex || '0 1 auto',
         alignItems: 'left',
-        margin: '0 77px 0 0',
+        margin: props.modalMargin || '0 77px 0 0',
         padding: '0 8px 0 0',
         width: '369px',
         height: '30px',
@@ -118,22 +124,22 @@ const CategoryScoresContainer = (props) => {
       className={props.className}
       style={{
         display: 'flex',
-        justifyContent: 'space-evenly',
-        flexDirection: props.flexDirection || 'row',
-        flexWrap: 'wrap',
-        flex: '1 0 0%',
+        justifyContent: props.modalJustifyContent || 'space-around',
+        flexDirection: props.flexDirection || 'column',
+        flexFlow: 'row wrap',
+        //flex: '1 0 0%',
         alignItems: 'left',
-        height: '108px',
-        minWidth: '920px',
-        maxWidth: '1370px'
+        //height: '108px',
+        //minWidth: '920px',
+        maxWidth: '1000px'
       }}
     >
-      <SpecificScoreContainer category={'Cleanliness'} categoryScore={props.currentListing.cleanlinessScore}></SpecificScoreContainer>
-      <SpecificScoreContainer category={'Accuracy'} categoryScore={props.currentListing.accuracyScore}></SpecificScoreContainer>
-      <SpecificScoreContainer category={'Communication'} categoryScore={props.currentListing.communicationScore}></SpecificScoreContainer>
-      <SpecificScoreContainer category={'Location'} categoryScore={props.currentListing.locationScore}></SpecificScoreContainer>
-      <SpecificScoreContainer category={'Check-in'} categoryScore={props.currentListing.checkInScore}></SpecificScoreContainer>
-      <SpecificScoreContainer category={'Value'} categoryScore={props.currentListing.valueScore}></SpecificScoreContainer>
+      <SpecificScoreContainer category={'Cleanliness'} categoryScore={props.currentListing.cleanlinessScore} modalMargin={props.modalMargin}></SpecificScoreContainer>
+      <SpecificScoreContainer category={'Accuracy'} categoryScore={props.currentListing.accuracyScore} modalMargin={props.modalMargin}></SpecificScoreContainer>
+      <SpecificScoreContainer category={'Communication'} categoryScore={props.currentListing.communicationScore} modalMargin={props.modalMargin}></SpecificScoreContainer>
+      <SpecificScoreContainer category={'Location'} categoryScore={props.currentListing.locationScore} modalMargin={props.modalMargin}></SpecificScoreContainer>
+      <SpecificScoreContainer category={'Check-in'} categoryScore={props.currentListing.checkInScore} modalMargin={props.modalMargin}></SpecificScoreContainer>
+      <SpecificScoreContainer category={'Value'} categoryScore={props.currentListing.valueScore} modalMargin={props.modalMargin}></SpecificScoreContainer>
       {props.children}
     </div>
   );
