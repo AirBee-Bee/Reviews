@@ -19,6 +19,7 @@ const customStyles = {
     backgroundColor: 'rgb(72, 72, 72, .5)',
   },
   content: {
+    justifyContent: 'flex-start',
     top: '40px',
     left: '40px',
     right: '40px',
@@ -30,12 +31,12 @@ const customStyles = {
     backgroundColor: 'white',
     outlineColor: 'rgb(72, 72, 72)',
     borderRadius: '12px',
-    maxWidth: '1032px',
+    maxWidth: '1000px',
     flexFlow: 'row wrap'
   }
 };
 
-ReactModal.setAppElement('#app');
+ReactModal.setAppElement('#reviews');
 
 class App extends React.Component {
   constructor(props) {
@@ -77,6 +78,7 @@ class App extends React.Component {
       <button
         onClick={this.hideModal}
         style={{
+          //position: 'absolute',
           display: 'block',
           fill: 'none',
           height: '16px',
@@ -105,7 +107,7 @@ class App extends React.Component {
   }
 
   getCurrentListingReviews(propertyName) {
-    var thisUrl = `propertyReviews/${propertyName}`;
+    var thisUrl = `/propertyReviews/${propertyName}`;
     $.ajax({
       url: thisUrl,
       type: 'GET',
@@ -127,7 +129,7 @@ class App extends React.Component {
   }
 
   getCurrentListingScores(propertyName) {
-    var thisUrl = `propertyScores/${propertyName}`;
+    var thisUrl = `/propertyScores/${propertyName}`;
     $.ajax({
       url: thisUrl,
       type: 'GET',
@@ -152,7 +154,8 @@ class App extends React.Component {
   }
 
   getCurrentListingUsers() {
-    var thisUrl = `userInfo/${this.state.allIds}`;
+    var thisUrl = `/userInfo/${this.state.allIds}`;
+    console.log('thisUrl: ', thisUrl);
     $.ajax({
       url: thisUrl,
       type: 'GET',
@@ -176,8 +179,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getCurrentListingScores('amenities');
-    this.getCurrentListingReviews('amenities');
+    var addressFormatting = window.location.pathname.split('/');
+    var address = addressFormatting[addressFormatting.length - 1];
+    this.getCurrentListingScores(address);
+    this.getCurrentListingReviews(address);
   }
 
   render() {
@@ -189,8 +194,8 @@ class App extends React.Component {
           }}>
           </PageContainer>
           <ReactModal isOpen={this.state.show} onRequestClose={this.hideModal} style={customStyles}>
-            {this.closeModalButton()}
             <div>
+              {this.closeModalButton()}
               <ScoreHeading height={'59px'} currentListing={this.state.currentListing} fontSize={'32px'} lineHeight={'36px'} fontWeight={'800px'}/>
               <CategoryScores currentListing={this.state.currentListing} modalJustifyContent='center' modalMargin='0 0 0 0'/>
             </div>
@@ -210,4 +215,4 @@ class App extends React.Component {
 
 export default App;
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('reviews'));
