@@ -127,10 +127,7 @@ const CategoryScoresContainer = (props) => {
         justifyContent: props.modalJustifyContent || 'space-around',
         flexDirection: props.flexDirection || 'column',
         flexFlow: 'row wrap',
-        //flex: '1 0 0%',
         alignItems: 'left',
-        //height: '108px',
-        //minWidth: '920px',
         maxWidth: '1000px'
       }}
     >

@@ -94,8 +94,6 @@ const SpecificReviewPicture = (props) => {
     <div
       className={props.className}
       style={{
-        //justifyContent: props.justifyContent || 'flex-start',
-        //alignItems: 'left',
         margin: '0 12px 16px 0',
         width: '56px',
         height: '56px',
@@ -158,33 +156,18 @@ const ReviewsContainer = (props) => {
       className={props.className}
       style={{
         display: 'flex',
-        justifyContent: /*props.justifyContent || */'flex-start',
-        //flexDirection: props.flexDirection || 'column',
+        justifyContent: 'flex-start',
         flexFlow: 'row wrap',
         flex: '0 1 0%',
         alignItems: 'left',
-        //height: '504px',
-        maxWidth: /*props.maxWidth || */'1400px',
-        //minWidth: '479px'
+        maxWidth: '1400px',
       }}
     >
-
-
       {props.currentReviews.map((review, index) => {
         return <div>
           <SpecificReviewContainer specificReview={props.currentReviews[index]} specificUser={props.users[props.currentReviews[index].user]} margin='0'></SpecificReviewContainer>
         </div>;
       })}
-
-
-
-
-      {/* <SpecificReviewContainer specificReview={props.currentReviews[0]} specificUser={props.users[props.currentReviews[0].user]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[1]} specificUser={props.users[props.currentReviews[1].user]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[2]} specificUser={props.users[props.currentReviews[2].user]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[3]} specificUser={props.users[props.currentReviews[3].user]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[4]} specificUser={props.users[props.currentReviews[4].user]}></SpecificReviewContainer>
-      <SpecificReviewContainer specificReview={props.currentReviews[5]} specificUser={props.users[props.currentReviews[5].user]}></SpecificReviewContainer> */}
       {props.children}
     </div>
   );

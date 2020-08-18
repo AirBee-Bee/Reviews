@@ -48,8 +48,12 @@ module.exports.updateUsersQuery = function(user, name, url) {
   return accessor(`REPLACE INTO users (user_id, user_name, user_image_url) VALUES ("${user}", "${name}", ${url});`);
 };
 
-module.exports.propertyScoreQuery = function(requestedProperty) {
-  return accessor(`SELECT * FROM property WHERE property_name = "${requestedProperty}";`);
+module.exports.propertyScoreQuery = function(requestedId) {
+  return accessor(`select * from property limit ${requestedId},1;`);
+};
+
+module.exports.propertyNameQuery = function(requestedId) {
+  return accessor(`select property_name from property limit ${requestedId},1;`);
 };
 
 module.exports.propertyReviewsQuery = function(requestedProperty) {

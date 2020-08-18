@@ -78,7 +78,6 @@ class App extends React.Component {
       <button
         onClick={this.hideModal}
         style={{
-          //position: 'absolute',
           display: 'block',
           fill: 'none',
           height: '16px',
@@ -98,7 +97,6 @@ class App extends React.Component {
   }
 
   showModal(e) {
-    console.log('clicked');
     this.setState({show: true});
   }
 
@@ -106,12 +104,12 @@ class App extends React.Component {
     this.setState({show: false});
   }
 
-  getCurrentListingReviews(propertyName) {
-    var thisUrl = `/propertyReviews/${propertyName}`;
+  getCurrentListingReviews(listingId) {
+    var thisUrl = `/propertyReviews/${listingId}`;
     $.ajax({
       url: thisUrl,
       type: 'GET',
-      data: JSON.stringify({'propertyName': propertyName}),
+      data: JSON.stringify({'listingId': listingId}),
       contentType: 'application/json',
       success: (listingData) => {
         var idSet = new Set();
@@ -120,7 +118,7 @@ class App extends React.Component {
         }
         var ids = Array.from(idSet);
         var firstSix = [];
-        for (let review = 0; review < 6; review++) {
+        for (let review = 0; review < 6 && review < listingData.length; review++) {
           firstSix.push(listingData[review]);
         }
         this.setState({allReviews: listingData, currentReviews: firstSix, modalReviews: firstSix, allIds: ids, fetchingReviews: false}, () => this.getCurrentListingUsers());
@@ -128,12 +126,12 @@ class App extends React.Component {
     });
   }
 
-  getCurrentListingScores(propertyName) {
-    var thisUrl = `/propertyScores/${propertyName}`;
+  getCurrentListingScores(listingId) {
+    var thisUrl = `/propertyScores/${listingId}`;
     $.ajax({
       url: thisUrl,
       type: 'GET',
-      data: JSON.stringify({'propertyName': propertyName}),
+      data: JSON.stringify({'listingId': listingId}),
       contentType: 'application/json',
       success: (listingData) => {
         this.setState({currentListing: {
@@ -155,7 +153,6 @@ class App extends React.Component {
 
   getCurrentListingUsers() {
     var thisUrl = `/userInfo/${this.state.allIds}`;
-    console.log('thisUrl: ', thisUrl);
     $.ajax({
       url: thisUrl,
       type: 'GET',

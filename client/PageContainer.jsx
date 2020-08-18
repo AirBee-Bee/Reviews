@@ -73,7 +73,7 @@ const PageContainer = (props) => {
         zIndex: 1
       }}
     >
-      <InnerContainer padding={'48px 24px 0'} /*height={'1160px'} */currentListing={props.currentListing} currentReviews={props.currentReviews} users={props.users} onClick={props.onClick}></InnerContainer>
+      <InnerContainer padding={'48px 24px 0'}currentListing={props.currentListing} currentReviews={props.currentReviews} users={props.users} onClick={props.onClick}></InnerContainer>
       {props.children}
     </div>
   );
