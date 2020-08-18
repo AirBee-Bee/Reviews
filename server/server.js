@@ -2,6 +2,7 @@ var express = require('express');
 var db = require('./database/index.js');
 var App = express();
 var path = require('path');
+var cors = require('cors');
 //var seeder = require('./database/dbSeeder.js');
 
 //App.use(express.static(__dirname + '/..' + '/public'));
@@ -12,6 +13,7 @@ App.get('/property/:propertyName', (req, res) => {
   res.sendFile('index.html', { root: path.join(__dirname, '../public') });
 });
 App.use(express.json());
+App.use(cors());
 
 // get review scores for a specific property
 App.get('/propertyScores/:propertyName', (req, res) => {
