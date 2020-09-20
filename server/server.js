@@ -3,7 +3,6 @@ var db = require('./database/index.js');
 var App = express();
 var path = require('path');
 var cors = require('cors');
-//var seeder = require('./database/dbSeeder.js');
 
 App.get('/public/bundle.js', (req, res) => {
   res.sendFile('bundle.js', { root: path.join(__dirname, '../public') });
